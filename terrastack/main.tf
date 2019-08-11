@@ -197,11 +197,12 @@ module "tenant-vpc-b" {
 
 # Transit Gateway
 ## Default association and propagation are disabled since our scenario involves
-## a more elaborated setup where
-## - Dev VPCs can reach themselves and the Shared VPC
-## - the Shared VPC can reach all VPCs
-## - the Prod VPC can only reach the Shared VPC
-## The default setup being a full mesh scenario where all VPCs can see every other
+## a more elaborated setup where:
+## - the Dev VPC can reach Transit VPC
+## - the Itg VPC can reach teh Transit VPC
+## - Dev and Itg VPC reach the Internet through the Transit VPC
+## - the Transit VPC can reach all VPCs
+
 resource "aws_ec2_transit_gateway" "web-tgw" {
   description                     = "web transit gateway"
   default_route_table_association = "disable"
@@ -249,7 +250,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-att-tenant-vpc-b" {
   depends_on = ["aws_ec2_transit_gateway.web-tgw"]
 }
 
-# # Route Tables
+# # TGW Route Tables
 
 resource "aws_ec2_transit_gateway_route_table" "tgw-transit-vpc-rt" {
   transit_gateway_id = "${aws_ec2_transit_gateway.web-tgw.id}"
@@ -275,7 +276,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgw-itg-rt" {
   depends_on = ["aws_ec2_transit_gateway.web-tgw"]
 }
 
-# Route Tables Associations
+# TGW Route Tables Associations
 ## This is the link between a VPC (already symbolized with its attachment to the Transit Gateway)
 ##  and the Route Table the VPC's packet will hit when they arrive into the Transit Gateway.
 ## The Route Tables Associations do not represent the actual routes the packets are routed to.
@@ -296,7 +297,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-tenant-vpc-b-
   transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.tgw-itg-rt.id}"
 }
 
-# Route Tables Propagations
+# TGW Route Tables Propagations
 ## This section defines which VPCs will be routed from each Route Table created in the Transit Gateway
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-dev-to-transit-vpc" {
@@ -319,7 +320,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "tgw-rt-transit-vpc-t
   transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.tgw-itg-rt.id}"
 }
 
-# Transit Gateway Routes Section
+# TGW Static Routes
 ## Creates default routes for attached dev and itg environments to reach the Internet
 
 resource "aws_ec2_transit_gateway_route" "dev" {
@@ -334,7 +335,7 @@ resource "aws_ec2_transit_gateway_route" "itg" {
   transit_gateway_route_table_id = "${aws_ec2_transit_gateway_route_table.tgw-itg-rt.id}"
 }
 
-# Subnet Route Section
+# VPC Subnet Routes 
 ## Updates subnet route tables to point at Transit Gateway
 
 resource "aws_route" "transit-a-route" {
