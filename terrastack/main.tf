@@ -347,19 +347,19 @@ resource "aws_ec2_transit_gateway_route" "itg" {
 # VPC Subnet Routes 
 ## Updates subnet route tables to point at Transit Gateway
 
-resource "aws_route" "transit-a-route" {
+resource "aws_route" "transit-subnet-a-route" {
   route_table_id         = module.transit-vpc.private_route_table_ids[0]
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "transit-b-route" {
+resource "aws_route" "transit-subnet-b-route" {
   route_table_id         = module.transit-vpc.private_route_table_ids[1]
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "transit-c-route" {
+resource "aws_route" "transit-subnet-c-route" {
   route_table_id         = module.transit-vpc.private_route_table_ids[2]
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
@@ -371,35 +371,35 @@ resource "aws_route" "transit-public-route" {
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "dev-a-route" {
+resource "aws_route" "dev-subnet-a-route" {
   route_table_id         = module.tenant-vpc-a.private_route_table_ids[0]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "dev-b-route" {
+resource "aws_route" "dev-subnet-b-route" {
   route_table_id         = module.tenant-vpc-a.private_route_table_ids[1]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
-resource "aws_route" "dev-c-route" {
+resource "aws_route" "dev-subnet-c-route" {
   route_table_id         = module.tenant-vpc-a.private_route_table_ids[2]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "itg-a-route" {
+resource "aws_route" "itg-subnet-a-route" {
   route_table_id         = module.tenant-vpc-b.private_route_table_ids[0]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
 
-resource "aws_route" "itg-b-route" {
+resource "aws_route" "itg-subnet-b-route" {
   route_table_id         = module.tenant-vpc-b.private_route_table_ids[1]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
 }
-resource "aws_route" "itg-c-route" {
+resource "aws_route" "itg-subnet-c-route" {
   route_table_id         = module.tenant-vpc-b.private_route_table_ids[2]
   destination_cidr_block = "0.0.0.0/0"
   transit_gateway_id     = "${aws_ec2_transit_gateway.web-tgw.id}"
