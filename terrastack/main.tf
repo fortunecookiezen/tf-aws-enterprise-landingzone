@@ -41,6 +41,9 @@ resource "aws_default_security_group" "transit-default-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    Name = "transit-default-sg"
+  }
 }
 
 resource "aws_default_security_group" "tenant-a-default-sg" {
@@ -63,6 +66,9 @@ resource "aws_default_security_group" "tenant-a-default-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    Name = "tenant-a-default-sg"
+  }
 }
 
 resource "aws_default_security_group" "tenant-b-default-sg" {
@@ -84,6 +90,9 @@ resource "aws_default_security_group" "tenant-b-default-sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "tenant-b-default-sg"
   }
 }
 
