@@ -1,6 +1,3 @@
-variable "owner" {
-  default = ""
-}
 
 data "aws_security_group" "default" {
   name   = "default"
@@ -36,7 +33,7 @@ module "vpc" {
 
   tags = {
     Terraform   = "true"
-    Environment = "nonprod"
+    Environment = var.environment
     Owner       = var.owner
   }
 }
