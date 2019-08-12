@@ -352,7 +352,7 @@ resource "aws_ec2_transit_gateway_route" "itg" {
 
 # VPC Subnet Routes 
 ## Updates subnet route tables to point at Transit Gateway
-
+## I really should fix this to use some kind of for loop now that tf supports it.
 resource "aws_route" "transit-subnet-a-route" {
   route_table_id         = module.transit-vpc.private_route_table_ids[0]
   destination_cidr_block = "10.0.0.0/8"
