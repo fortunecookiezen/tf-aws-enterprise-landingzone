@@ -96,7 +96,10 @@ resource "aws_default_security_group" "tenant-b-default-sg" {
   }
 }
 
-# VPC Section
+###############
+# VPC Section #
+###############
+
 ## Creates three VPCs
 
 module "transit-vpc" {
@@ -115,9 +118,10 @@ module "transit-vpc" {
   single_nat_gateway     = false
   one_nat_gateway_per_az = true
 
-  # ## create vpc endpoints
-  # enable_s3_endpoint = true
+  ## create vpc endpoints
+  enable_s3_endpoint = true
 
+## Begin vpc tags
   public_subnet_tags = {
     Layer = "loadbalancer"
   }
@@ -149,9 +153,10 @@ module "tenant-vpc-a" {
   enable_dns_support   = true
   enable_nat_gateway   = false
 
-  # ## create vpc endpoints
-  # enable_s3_endpoint = true
+  ## create vpc endpoints
+  enable_s3_endpoint = true
 
+## Begin vpc tags
   private_subnet_tags = {
     Layer = "app"
   }
@@ -182,9 +187,10 @@ module "tenant-vpc-b" {
   enable_dns_support   = true
   enable_nat_gateway   = false
 
-  # ## create vpc endpoints
-  # enable_s3_endpoint = true
+  ## create vpc endpoints
+  enable_s3_endpoint = true
 
+## Begin vpc tags
   private_subnet_tags = {
     Layer = "app"
   }
@@ -259,7 +265,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-att-tenant-vpc-b" {
   depends_on = ["aws_ec2_transit_gateway.web-tgw"]
 }
 
-# # TGW Route Tables
+# TGW Route Tables
 
 resource "aws_ec2_transit_gateway_route_table" "tgw-transit-vpc-rt" {
   transit_gateway_id = "${aws_ec2_transit_gateway.web-tgw.id}"
