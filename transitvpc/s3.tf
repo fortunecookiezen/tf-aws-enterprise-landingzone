@@ -13,6 +13,14 @@ resource "aws_s3_bucket" "storage-bucket" {
     Owner       = var.owner
   }
 }
+resource "aws_s3_bucket_public_access_block" "storage-bucket" {
+  bucket = "${aws_s3_bucket.storage-bucket.id}"
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 
 resource "aws_s3_bucket" "flowlogs-bucket" {
   bucket = "flowlogs-bucket"
@@ -27,7 +35,14 @@ resource "aws_s3_bucket" "flowlogs-bucket" {
     Owner       = var.owner
   }
 }
+resource "aws_s3_bucket_public_access_block" "flowlogs-bucket" {
+  bucket = "${aws_s3_bucket.flowlogs-bucket.id}"
 
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 resource "aws_s3_bucket" "s3-logs-bucket" {
   bucket = "s3-logs-bucket"
   acl    = "log-delivery-write"
@@ -37,4 +52,13 @@ resource "aws_s3_bucket" "s3-logs-bucket" {
     Environment = var.environment
     Owner       = var.owner
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "s3-logs-bucket" {
+  bucket = "${aws_s3_bucket.s3-logs-bucket.id}"
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }

@@ -121,7 +121,7 @@ module "transit-vpc" {
   ## create vpc endpoints
   enable_s3_endpoint = true
 
-## Begin vpc tags
+  ## Begin vpc tags
   public_subnet_tags = {
     Layer = "loadbalancer"
   }
@@ -156,7 +156,7 @@ module "tenant-vpc-a" {
   ## create vpc endpoints
   enable_s3_endpoint = true
 
-## Begin vpc tags
+  ## Begin vpc tags
   private_subnet_tags = {
     Layer = "app"
   }
@@ -190,7 +190,7 @@ module "tenant-vpc-b" {
   ## create vpc endpoints
   enable_s3_endpoint = true
 
-## Begin vpc tags
+  ## Begin vpc tags
   private_subnet_tags = {
     Layer = "app"
   }
