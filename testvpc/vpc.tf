@@ -1,3 +1,7 @@
+resource "random_id" "vpc" {
+  byte_length = 4
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -6,7 +10,7 @@ module "vpc" {
 
   azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
   private_subnets = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
-  public_subnets  = ["10.0.5.0/24","10.0.6.0/24", "10.0.7.0/24"]
+  public_subnets  = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"]
 
   enable_dns_hostnames   = true
   enable_dns_support     = true
@@ -15,8 +19,8 @@ module "vpc" {
   one_nat_gateway_per_az = false
 
   ## create vpc endpoints
-  enable_s3_endpoint = false
-  enable_dynamo_db_endpoint = false
+  enable_s3_endpoint       = false
+  enable_dynamodb_endpoint = false
 
   public_subnet_tags = {
     Layer = "loadbalancer"
@@ -30,6 +34,7 @@ module "vpc" {
     Terraform   = "true"
     Environment = var.environment
     Owner       = var.owner
+    Delete      = var.delete
   }
 }
 

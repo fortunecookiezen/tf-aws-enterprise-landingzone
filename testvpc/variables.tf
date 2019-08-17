@@ -1,9 +1,11 @@
-variable "owner" {
-  default = ""
-}
+variable "owner" {}
 
 variable "environment" {
-  default = "test"
+  default = "nonprod"
 }
 
 variable "net_cidr" {}
+
+variable "delete" {
+  default = "never"
+}
