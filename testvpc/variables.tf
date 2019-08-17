@@ -3,7 +3,7 @@ variable "owner" {
 }
 
 variable "environment" {
-  default = "nonprod"
+  default = "test"
 }
 
 variable "net_cidr" {}

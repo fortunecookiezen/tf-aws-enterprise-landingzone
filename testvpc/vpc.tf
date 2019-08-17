@@ -1,13 +1,7 @@
-
-data "aws_security_group" "default" {
-  name   = "default"
-  vpc_id = module.vpc.vpc_id
-}
-
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "transit-vpc"
+  name = "test"
   cidr = "10.0.0.0/22"
 
   azs             = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"]
@@ -21,7 +15,8 @@ module "vpc" {
   one_nat_gateway_per_az = false
 
   ## create vpc endpoints
-  enable_s3_endpoint = true
+  enable_s3_endpoint = false
+  enable_dynamo_db_endpoint = false
 
   public_subnet_tags = {
     Layer = "loadbalancer"
