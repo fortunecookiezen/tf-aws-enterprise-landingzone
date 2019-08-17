@@ -11,6 +11,7 @@ resource "aws_s3_bucket" "storage-bucket" {
     Name        = "storage bucket"
     Environment = var.environment
     Owner       = var.owner
+    Delete  = var.delete
   }
 }
 resource "aws_s3_bucket_public_access_block" "storage-bucket" {
